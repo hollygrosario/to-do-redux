@@ -1,12 +1,12 @@
 import React from 'react'
-import Todo from './Todo'
+import TodoList from './TodoList'
 import './App.css'
 
 const App = () => {
   return (
     <div className='App'>
       <header className='App-header'>
-        <Todo />
+        <TodoList />
       </header>
     </div>
   )
