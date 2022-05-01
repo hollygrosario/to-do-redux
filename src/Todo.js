@@ -11,7 +11,7 @@ import {
   IconButton
 } from '@material-ui/core'
 import { Edit, DeleteOutlined } from '@material-ui/icons'
-//useSelector is a hook to connect with the store state using a selector function
+// useSelector is a hook to connect with the store state using a selector function
 // instead of the using
 // connect method and don't want to fetch your store data by using
 // mapStateToProps
@@ -50,33 +50,33 @@ const useStyles = makeStyles({
   }
 })
 
-//import { getBooks } from './redux/actions'
+// import { getBooks } from './redux/actions'
 
- const Todo = () => {
-    const dispatch = useDispatch()
+const Todo = () => {
+  const dispatch = useDispatch()
   //  const state = useSelector(getTodos)
   const state = useSelector(state => state.todos)
 
-    useEffect(() => {
-        dispatch(getTodos())
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(getTodos())
+  }, [dispatch])
 
-    console.log('state:', state)
-  //const count = useSelector(selectCount)
-  //const state = useSelector(state => state.books)
+  console.log('state:', state)
+  // const count = useSelector(selectCount)
+  // const state = useSelector(state => state.books)
   const [inputVal, setInputVal] = useState(undefined)
-//move todos state to an actions page?
- const [todos, setTodos] = useState([])
+  // move todos state to an actions page?
+  const [todos, setTodos] = useState([])
 
   const [isEdited, setIsEdited] = useState(false)
   const [editedId, setEditedId] = useState(null)
   const classes = useStyles()
 
-  const onChange = (e) => {
+  const onChange = e => {
     setInputVal(e.target.value)
   }
 
-// need to handle it dispatch() w/ redux ??
+  // need to handle it dispatch() UPDATE PAYLOAD  w/ redux ??
   const handleClick = () => {
     if (!isEdited) {
       setTodos([
@@ -90,13 +90,13 @@ const useStyles = makeStyles({
     setIsEdited(false)
   }
 
-  const onDelete = (id) => {
-    const newTodos = todos.filter((todo) => todo.id !== id)
+  const onDelete = id => {
+    const newTodos = todos.filter(todo => todo.id !== id)
     setTodos(newTodos)
   }
 
-  const handleDone = (id) => {
-    const updated = todos.map((todo) => {
+  const handleDone = id => {
+    const updated = todos.map(todo => {
       if (todo.id === id) {
         todo.isDone = !todo.isDone
       }
@@ -105,9 +105,9 @@ const useStyles = makeStyles({
     setTodos(updated)
   }
 
-  const handleEdit = (id) => {
-    const newTodos = todos.filter((todo) => todo.id !== id)
-    const editVal = todos.find((todo) => todo.id === id)
+  const handleEdit = id => {
+    const newTodos = todos.filter(todo => todo.id !== id)
+    const editVal = todos.find(todo => todo.id === id)
     setEditedId(editVal.id)
     setInputVal(editVal.val)
     setTodos(newTodos)
@@ -117,7 +117,7 @@ const useStyles = makeStyles({
   return (
     <Container component='main' className={classes.container}>
       <TextField
-        variant="outlined"
+        variant='outlined'
         onChange={onChange}
         label='Create A New To-Do List'
         value={inputVal}
@@ -129,7 +129,7 @@ const useStyles = makeStyles({
         color='primary'
         onClick={handleClick}
         className={classes.addButton}
-        disabled={inputVal ? false : true}
+        disabled={!inputVal}
       >
         {isEdited ? 'Edit' : 'Add'}
       </Button>
@@ -151,18 +151,20 @@ const useStyles = makeStyles({
                   {todo.val}
                 </Typography>
                 <IconButton>
-                   <Edit
-                     onClick={() => handleEdit(todo.id)}
-                     variant='contained'
-                     className={classes.listButtons}/>
-                 </IconButton>
-                 <IconButton>
+                  <Edit
+                    onClick={() => handleEdit(todo.id)}
+                    variant='contained'
+                    className={classes.listButtons}
+                  />
+                </IconButton>
+                <IconButton>
                   <DeleteOutlined
                     onClick={() => onDelete(todo.id)}
                     color='secondary'
                     variant='contained'
-                    className={classes.listButtons}/>
-                 </IconButton>
+                    className={classes.listButtons}
+                  />
+                </IconButton>
               </ListItem>
             </>
           )
