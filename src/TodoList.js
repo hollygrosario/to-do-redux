@@ -132,6 +132,7 @@ const TodoList = () => {
     //  setIsEdited(false)
   }
 
+  // function to delete todos from the list
   const deleteTodo = id => {
     // filter to get the todoId which need to be delete
     const newTodoList = todoList.filter(todo => todo.id !== id)
