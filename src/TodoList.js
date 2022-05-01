@@ -132,10 +132,11 @@ const TodoList = () => {
     //  setIsEdited(false)
   }
 
-  // const onDelete = id => {
-  //  const newTodos = todos.filter(todo => todo.id !== id)
-  //  setTodos(newTodos)
-  //  }
+  const deleteTodo = id => {
+    // filter to get the todoId which need to be delete
+    const newTodoList = todoList.filter(todo => todo.id !== id)
+    dispatch({ type: 'DELETE_TODO', payload: newTodoList })
+  }
 
   //  const handleDone = id => {
   //  const updated = todos.map(todo => {
@@ -194,7 +195,9 @@ const TodoList = () => {
               </IconButton>
               <IconButton>
                 <DeleteOutlined
-                  onClick=''
+                  onClick={() => {
+                    deleteTodo(todo.id)
+                  }}
                   color='secondary'
                   variant='contained'
                   className={classes.listButtons}
