@@ -57,15 +57,11 @@ const useStyles = makeStyles({
     const dispatch = useDispatch()
     const state = useSelector(getTodos)
     console.log('state:', state)
-
   //const count = useSelector(selectCount)
   //const state = useSelector(state => state.books)
-
-
-
   const [inputVal, setInputVal] = useState(undefined)
 //move todos state to an actions page?
-  const [todos, setTodos] = dispatch(getTodos)
+ const [todos, setTodos] = useState([])
 
   const [isEdited, setIsEdited] = useState(false)
   const [editedId, setEditedId] = useState(null)
