@@ -84,8 +84,8 @@ const TodoList = () => {
   // move todos state to an actions page?
   // const [todos, setTodos] = useState([])
 
-  //  const [isEdited, setIsEdited] = useState(false)
-  // const [editedId, setEditedId] = useState(null)
+  const [isEdited, setIsEdited] = useState(false)
+  const [editedId, setEditedId] = useState(null)
 
   // Hook for styling
   const classes = useStyles()
@@ -136,30 +136,34 @@ const TodoList = () => {
   const deleteTodo = id => {
     // filter to get the todoId which need to be delete
     const newTodoList = todoList.filter(todo => todo.id !== id)
+    // dispatch the action and update the state/payload
     dispatch({ type: 'DELETE_TODO', payload: newTodoList })
   }
 
-  //  const handleDone = id => {
-  //  const updated = todos.map(todo => {
-  //  if (todo.id === id) {
-  //      todo.isDone = !todo.isDone
-  // }
-  //    return todo
-  //  })
-  //  setTodos(updated)
-  //  }
+  const handleDone = id => {
+    const updated = todoList.map(todo => {
+      if (todo.id === id) {
+        todo.isDone = !todo.isDone
+      }
+      return todo
+    })
+    //  setTodoList(updated)
+  }
 
-  //  const handleEdit = id => {
-  //  const newTodos = todos.filter(todo => todo.id !== id)
-  //  const editVal = todos.find(todo => todo.id === id)
-  //  setEditedId(editVal.id)
-  //  setInputVal(editVal.val)
-  //  setTodos(newTodos)
-  //    setIsEdited(true)
-  //  }
+  const editTodo = id => {
+    const newTodoList = todoList.filter(todo => todo.id !== id)
+    const editValue = todoList.find(todo => todo.id === id)
+    dispatch({ type: 'EDIT_TODO', payload: newTodoList })
+    setEditedId(editValue.id)
+    setInputValue(editValue.value)
+    //   setTodoList(newTodoList)
+    setIsEdited(true)
+  }
 
-  // button logic for is edited,   variant={isEdited ? 'outlined' : 'contained'},
-  // {isEdited ? 'Edit' : 'Add'}
+  // edit logic
+  //  {
+  //  isEdited ? 'Edit' : 'Add'
+  //  }
 
   return (
     <Container component='main' className={classes.container}>
@@ -172,7 +176,7 @@ const TodoList = () => {
       />
       <Button
         size='large'
-        variant='outlined'
+        variant={isEdited ? 'outlined' : 'contained'}
         color='primary'
         onClick={addNewTodo}
         className={classes.addButton}
@@ -192,7 +196,12 @@ const TodoList = () => {
                 {todo.content}
               </Typography>
               <IconButton>
-                <Edit onClick='' variant='contained' />
+                <Edit
+                  onClick={() => {
+                    editTodo(todo.id)
+                  }}
+                  variant='contained'
+                />
               </IconButton>
               <IconButton>
                 <DeleteOutlined
