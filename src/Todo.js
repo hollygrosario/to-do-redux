@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   TextField,
   Button,
@@ -53,9 +53,14 @@ const useStyles = makeStyles({
 //import { getBooks } from './redux/actions'
 
  const Todo = () => {
-   console.log('ugh')
     const dispatch = useDispatch()
-    const state = useSelector(getTodos)
+  //  const state = useSelector(getTodos)
+  const state = useSelector(state => state.todos)
+
+    useEffect(() => {
+        dispatch(getTodos())
+    }, [dispatch])
+
     console.log('state:', state)
   //const count = useSelector(selectCount)
   //const state = useSelector(state => state.books)
@@ -71,6 +76,7 @@ const useStyles = makeStyles({
     setInputVal(e.target.value)
   }
 
+// need to handle it dispatch() w/ redux ??
   const handleClick = () => {
     if (!isEdited) {
       setTodos([
@@ -82,7 +88,7 @@ const useStyles = makeStyles({
     }
     setInputVal('')
     setIsEdited(false)
-  };
+  }
 
   const onDelete = (id) => {
     const newTodos = todos.filter((todo) => todo.id !== id)
@@ -128,7 +134,8 @@ const useStyles = makeStyles({
         {isEdited ? 'Edit' : 'Add'}
       </Button>
       <List>
-        {todos.map((todo) => {
+        {todos.map(todo => {
+          console.log('todo:', todo)
           return (
             <>
               <ListItem divider='divider' className={classes.list}>
