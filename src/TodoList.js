@@ -79,7 +79,7 @@ const TodoList = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   // move todos state to an actions page?
-  const [todos, setTodos] = useState([])
+  // const [todos, setTodos] = useState([])
 
   //  const [isEdited, setIsEdited] = useState(false)
   // const [editedId, setEditedId] = useState(null)
@@ -175,7 +175,7 @@ const TodoList = () => {
         Add
       </Button>
       <List>
-        {todos.map(todo => {
+        {toDoList.map(todo => {
           console.log('todo:', todo)
           return (
             <>

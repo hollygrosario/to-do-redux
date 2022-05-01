@@ -1,18 +1,26 @@
 const initialState = {
-  todos: []
+  todoList: [
+    {
+      id: 1,
+      content: 'Walk the dog'
+    }
+  ]
 }
 // Reducers are functions that implement the behavior of the actions.
 // They change the state of the app, based on the action description
 // and the state change description
-const TodosReducer = (state = initialState, action) => {
+const TodoReducer = (state = initialState, action) => {
   console.log('state/reducers:', state)
-  // console.log('action:', action)
+  //  console.log('action:', action)
   switch (action.type) {
-    case 'get_todos':
-      return { ...state, todos: action.payload }
+    case 'ADD_TODO':
+      return {
+        ...state,
+        todoList: [...state.toDoList, action.payload]
+      }
     default:
-      return { ...state }
+      return state
   }
 }
 
-export default TodosReducer
+export default TodoReducer
