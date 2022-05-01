@@ -11,12 +11,12 @@ const initialState = {
 // and the state change description
 const TodoReducer = (state = initialState, action) => {
   console.log('state/reducers:', state)
-  //  console.log('action:', action)
+  console.log('action/reducer:', action)
   switch (action.type) {
     case 'ADD_TODO':
       return {
         ...state,
-        todoList: [...state.toDoList, action.payload]
+        todoList: [...state.todoList, action.payload]
       }
     default:
       return state

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   TextField,
   Button,
+  Typography,
   Checkbox,
   List,
   ListItem,
@@ -18,7 +19,7 @@ import { Edit, DeleteOutlined } from '@material-ui/icons'
 //  without connecting our component with connect method
 // This hook returns a reference to the dispatch function from the Redux store.
 import { useSelector, useDispatch } from 'react-redux'
-import getTodos from './actions'
+// import getTodos from './actions'
 
 // define css rules
 const useStyles = makeStyles({
@@ -28,6 +29,7 @@ const useStyles = makeStyles({
   },
   addButton: {
     height: 55,
+    marginLeft: 5,
     marginBottom: 30
   },
   container: {
@@ -56,16 +58,17 @@ const TodoList = () => {
   const dispatch = useDispatch()
 
   // Get todoList from todoReducer
-  const toDoList = useSelector(state => state.todos)
-  console.log('toDoList:', toDoList)
+  const todoList = useSelector(state => state.todoList)
+  console.log('todoList/ initial state:', todoList)
 
   // Add new todo item into List with the action
   // dispatch({type:'ADD_TODO',payload:newTodoObject})
 
+  // pull actions out into its own component
   // on page load dispatch to actions get todos
-  useEffect(() => {
-    dispatch(getTodos())
-  }, [dispatch])
+  //  useEffect(() => {
+  //    dispatch(getTodos())
+  //  }, [dispatch])
 
   //  const state = useSelector(getTodos)
   // const count = useSelector(selectCount)
@@ -135,10 +138,10 @@ const TodoList = () => {
   //  }
 
   //  const handleDone = id => {
-  //    const updated = todos.map(todo => {
-  //    if (todo.id === id) {
+  //  const updated = todos.map(todo => {
+  //  if (todo.id === id) {
   //      todo.isDone = !todo.isDone
-  //  }
+  // }
   //    return todo
   //  })
   //  setTodos(updated)
@@ -175,29 +178,29 @@ const TodoList = () => {
         Add
       </Button>
       <List>
-        {toDoList.map(todo => {
-          console.log('todo:', todo)
+        {todoList.map(todo => {
           return (
-            <>
-              <ListItem divider='divider' className={classes.list}>
-                <Checkbox onClick='' checked={todo.isDone} />
-                <IconButton>
-                  <Edit
-                    onClick=''
-                    variant='contained'
-                    className={classes.listButtons}
-                  />
-                </IconButton>
-                <IconButton>
-                  <DeleteOutlined
-                    onClick=''
-                    color='secondary'
-                    variant='contained'
-                    className={classes.listButtons}
-                  />
-                </IconButton>
-              </ListItem>
-            </>
+            <ListItem divider='divider' className={classes.list}>
+              <Checkbox onClick='' checked={todo.isDone} />
+              <Typography
+                className={classes.text}
+                style={{ color: todo.isDone ? 'green' : '' }}
+                key={todo.id}
+              >
+                {todo.content}
+              </Typography>
+              <IconButton>
+                <Edit onClick='' variant='contained' />
+              </IconButton>
+              <IconButton>
+                <DeleteOutlined
+                  onClick=''
+                  color='secondary'
+                  variant='contained'
+                  className={classes.listButtons}
+                />
+              </IconButton>
+            </ListItem>
           )
         })}
       </List>
