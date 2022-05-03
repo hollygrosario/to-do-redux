@@ -31,6 +31,12 @@ const TodoReducer = (state = initialState, action) => {
         ...state,
         todoList: action.payload
       }
+    // in case of edit todo we return the updated state off the todo list and the payload
+    case 'COMPLETE_TODO':
+      return {
+        ...state,
+        todoList: action.payload
+      }
     // in case of default we return the state
     default:
       return state

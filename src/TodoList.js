@@ -122,17 +122,17 @@ const TodoList = () => {
       setErrorMessage('Please add some text...')
     }
 
-    if (!isEdited) {
-      console.log('!isEdited:', !isEdited)
-      //  setTodos([
-      //    ...todoList,
-      //  { val: inputValue, isDone: false, id: new Date().getTime() }
-      //    ])
-    } else {
-      console.log('!isEdited:', !isEdited)
-      //  setTodos([...todos, { val: inputVal, isDone: false, id: editedId }])
-    }
-    setIsEdited(false)
+    //    if (!isEdited) {
+    //    console.log('!isEdited???:', !isEdited)
+    //  setTodos([
+    //    ...todoList,
+    //  { val: inputValue, isDone: false, id: new Date().getTime() }
+    //    ])
+    // } else {
+    //  console.log('isEdited/???:', isEdited)
+    //  setTodos([...todos, { val: inputVal, isDone: false, id: editedId }])
+    //  }
+    //  setIsEdited(false)
   }
 
   // function to delete todos from the list
@@ -143,15 +143,18 @@ const TodoList = () => {
     dispatch({ type: 'DELETE_TODO', payload: newTodoList })
   }
 
-  // const handleDone = id => {
-  //  const updated = todoList.map(todo => {
-  //  if (todo.id === id) {
-  //  todo.isDone = !todo.isDone
-  //  }
-  //  return todo
-  // })
-  //  setTodoList(updated)
-  // }
+  const completeTodo = id => {
+    console.log('id:', id)
+    const completedTodo = todoList.map(todo => {
+      console.log('todo/completed:', todo)
+      if (todo.id === id) {
+        todo.isDone = !todo.isDone
+      }
+      return todo
+    })
+    // dispatch state
+    dispatch({ type: 'COMPLETE_TODO', payload: completedTodo })
+  }
 
   const editTodo = id => {
     // filter to get the todoId which need to be edited
@@ -163,10 +166,11 @@ const TodoList = () => {
     console.log('editId/edit:', editedId)
     setInputValue(editValue.content)
     console.log('inputValue/edit:', inputValue)
+    // dispatch the action and update the state/payload
     dispatch({ type: 'EDIT_TODO', payload: newTodoList })
-    setIsEdited(true)
+    //   setIsEdited(true)
   }
-
+  // {isEdited ? 'Edit' : 'Add'}
   return (
     <Container component='main' className={classes.container}>
       <TextField
@@ -183,13 +187,16 @@ const TodoList = () => {
         onClick={addNewTodo}
         className={classes.addButton}
       >
-        {isEdited ? 'Edit' : 'Add'}
+        Add
       </Button>
       <List>
         {todoList.map(todo => {
           return (
             <ListItem divider='divider' className={classes.list}>
-              <Checkbox onClick='' checked={todo.isDone} />
+              <Checkbox
+                onClick={() => completeTodo(todo.id)}
+                checked={todo.isDone}
+              />
               <Typography
                 className={classes.text}
                 style={{ color: todo.isDone ? 'green' : '' }}
