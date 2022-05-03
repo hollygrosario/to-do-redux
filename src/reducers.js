@@ -2,7 +2,7 @@
 const initialState = {
   todoList: [
     {
-      id: 1,
+      id: Math.random(),
       content: 'Walk the dog'
     }
   ]
@@ -29,7 +29,7 @@ const TodoReducer = (state = initialState, action) => {
     case 'EDIT_TODO':
       return {
         ...state,
-        todoList: [...state.todoList, action.payload]
+        todoList: action.payload
       }
     // in case of default we return the state
     default:

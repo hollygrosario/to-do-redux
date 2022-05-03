@@ -80,12 +80,14 @@ const TodoList = () => {
 
   // Local state for the input error message
   const [errorMessage, setErrorMessage] = useState('')
-
+  console.log('errorMessage:', errorMessage)
   // move todos state to an actions page?
   // const [todos, setTodos] = useState([])
 
   const [isEdited, setIsEdited] = useState(false)
+  console.log('isEdited:', isEdited)
   const [editedId, setEditedId] = useState(null)
+  console.log('editedId:', editedId)
 
   // Hook for styling
   const classes = useStyles()
@@ -119,17 +121,18 @@ const TodoList = () => {
       // display the error message
       setErrorMessage('Please add some text...')
     }
-    // is isEdited logic?
-    //  if (!isEdited) {
-    //    setTodos([
-    //    ...todos,
-    //    { val: inputValue, isDone: false, id: new Date().getTime() }
-    //    ])
-    //  } else {
-    //     setTodos([...todos, { val: inputVal, isDone: false, id: editedId }])
-    //  }
 
-    //  setIsEdited(false)
+    if (!isEdited) {
+      console.log('!isEdited:', !isEdited)
+      //  setTodos([
+      //    ...todoList,
+      //  { val: inputValue, isDone: false, id: new Date().getTime() }
+      //    ])
+    } else {
+      console.log('!isEdited:', !isEdited)
+      //  setTodos([...todos, { val: inputVal, isDone: false, id: editedId }])
+    }
+    setIsEdited(false)
   }
 
   // function to delete todos from the list
@@ -140,30 +143,29 @@ const TodoList = () => {
     dispatch({ type: 'DELETE_TODO', payload: newTodoList })
   }
 
-  const handleDone = id => {
-    const updated = todoList.map(todo => {
-      if (todo.id === id) {
-        todo.isDone = !todo.isDone
-      }
-      return todo
-    })
-    //  setTodoList(updated)
-  }
+  // const handleDone = id => {
+  //  const updated = todoList.map(todo => {
+  //  if (todo.id === id) {
+  //  todo.isDone = !todo.isDone
+  //  }
+  //  return todo
+  // })
+  //  setTodoList(updated)
+  // }
 
   const editTodo = id => {
+    // filter to get the todoId which need to be edited
     const newTodoList = todoList.filter(todo => todo.id !== id)
+    console.log('newTodoList/edit:', newTodoList)
     const editValue = todoList.find(todo => todo.id === id)
-    dispatch({ type: 'EDIT_TODO', payload: newTodoList })
+    console.log('editValue/edit:', editValue)
     setEditedId(editValue.id)
-    setInputValue(editValue.value)
-    //   setTodoList(newTodoList)
+    console.log('editId/edit:', editedId)
+    setInputValue(editValue.content)
+    console.log('inputValue/edit:', inputValue)
+    dispatch({ type: 'EDIT_TODO', payload: newTodoList })
     setIsEdited(true)
   }
-
-  // edit logic
-  //  {
-  //  isEdited ? 'Edit' : 'Add'
-  //  }
 
   return (
     <Container component='main' className={classes.container}>
@@ -181,7 +183,7 @@ const TodoList = () => {
         onClick={addNewTodo}
         className={classes.addButton}
       >
-        Add
+        {isEdited ? 'Edit' : 'Add'}
       </Button>
       <List>
         {todoList.map(todo => {
