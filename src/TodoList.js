@@ -78,9 +78,6 @@ const TodoList = () => {
   const [inputValue, setInputValue] = useState(undefined)
   console.log('inputValue/initial state:', inputValue)
 
-  // Local state for the input error message
-  const [errorMessage, setErrorMessage] = useState('')
-  console.log('errorMessage:', errorMessage)
   // move todos state to an actions page?
   // const [todos, setTodos] = useState([])
 
@@ -100,27 +97,23 @@ const TodoList = () => {
 
   // handle the on click event
   const addNewTodo = () => {
-    console.log('addNewTodo on click')
-    // validate the input value
-    if (inputValue) {
-      console.log('inputValue:', inputValue)
-      // set the error message to an empty string
-      setErrorMessage('')
-      // define a new todo object
-      const newTodo = {
-        id: Math.random(),
-        content: inputValue
-      }
-      console.log('newTodo:', newTodo)
-      // dispatch new todo item into List with the action
-      dispatch({ type: 'ADD_TODO', payload: newTodo })
-      // empty the input
-      setInputValue('')
-    } else {
-      console.log('errorMessage:', errorMessage)
-      // display the error message
-      setErrorMessage('Please add some text...')
+    const id = Math.random()
+    console.log('id:', id)
+    if (isEdited === true) {
+      const id = editedId
+      console.log('testing:', id)
     }
+    const newTodo = {
+      id: id,
+      content: inputValue
+    }
+    console.log('newTodo:', newTodo)
+
+    // dispatch new todo item into List with the action
+    dispatch({ type: 'ADD_TODO', payload: newTodo })
+    setIsEdited(false)
+    // empty the input
+    setInputValue('')
 
     //    if (!isEdited) {
     //    console.log('!isEdited???:', !isEdited)
@@ -168,7 +161,7 @@ const TodoList = () => {
     console.log('inputValue/edit:', inputValue)
     // dispatch the action and update the state/payload
     dispatch({ type: 'EDIT_TODO', payload: newTodoList })
-    //   setIsEdited(true)
+    setIsEdited(true)
   }
   // {isEdited ? 'Edit' : 'Add'}
   return (
